@@ -24,7 +24,7 @@ export let Login = asyncHandler(async (req, res, next) => {
       return next(ErrorShower(500, "All fields are required."));
     let Username = await User.findOne({ username });
     if (!Username) return next(ErrorShower(500, "wrong username"));
-    let Password = bcrypt.compare(req.body.password, Username.password);
+    let Password = await bcrypt.compare(password, Username.password);
     if (!Password) return next(ErrorShower(500, "wrong username or password"));
     res.status(200).json(Username);
   } catch (error) {
